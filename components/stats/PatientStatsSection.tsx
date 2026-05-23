@@ -60,16 +60,24 @@ const CustomTooltip = ({
 const RADIAN = Math.PI / 180
 
 interface PieLabelProps {
-    cx: number
-    cy: number
-    midAngle: number
-    innerRadius: number
-    outerRadius: number
-    percent: number
+    cx?: number | string
+    cy?: number | string
+    midAngle?: number
+    innerRadius?: number | string
+    outerRadius?: number | string
+    percent?: number
 }
 
 const PieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: PieLabelProps) => {
-    if (percent < 0.06) return null
+    if (
+        typeof cx !== 'number' ||
+        typeof cy !== 'number' ||
+        midAngle === undefined ||
+        typeof innerRadius !== 'number' ||
+        typeof outerRadius !== 'number' ||
+        percent === undefined ||
+        percent < 0.06
+    ) return null
     const r = innerRadius + (outerRadius - innerRadius) * 0.5
     const x = cx + r * Math.cos(-midAngle * RADIAN)
     const y = cy + r * Math.sin(-midAngle * RADIAN)
